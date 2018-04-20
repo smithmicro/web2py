@@ -28,4 +28,4 @@ ENTRYPOINT [ "/opt/entrypoint.sh" ]
 CMD [ "http" ]
 USER web2py
 
-EXPOSE 9090
+EXPOSE 8080 9090

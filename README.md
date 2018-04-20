@@ -4,7 +4,7 @@ This image combines web2py and uWSGI into one flexible image.  It supports 3 mod
 ## Getting started
 To run a simple example using HTTP:
 ```
-docker run -p 8080:9090 smithmicro/web2py
+docker run -p 8080:8080 smithmicro/web2py
 ```
 Then open a web browser to:  http://localhost:8080
 
@@ -18,13 +18,13 @@ Then open a web browser to:  http://localhost:8080
 
 |command|operation|
 |-------|---------|
-|http   |Listen on port 9090 using `http://` using uWSGI in HTTP mode  (default) |
+|http   |Listen on port 8080 using `http://` using uWSGI in HTTP mode  (default) |
 |uwsgi  |Listen on port 9090 using `uwsgi://` which is useful for connecting to a reverse proxy like nginx|
-|web2py |Listen on port 9090 using `http:// ` with the built in web2py web server|
+|rocket |Listen on port 8080 using `http:// ` with the built in Web2py Rocket web server|
 
 Example:
 ```
-docker run -it -p 8080:9090 smithmicro/web2py web2py
+docker run -it -p 8080:8080 smithmicro/web2py web2py
 ```
 
 ## Docker Environment Variables

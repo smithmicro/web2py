@@ -29,15 +29,15 @@ if [ "$1" = 'http' ]; then
   # add an admin password if specified
   adminPassword
   # run uwsgi
-  exec uwsgi --http 0.0.0.0:9090 --chdir /opt/web2py --wsgi wsgihandler:application --master
+  exec uwsgi --http 0.0.0.0:8080 --chdir /opt/web2py --wsgi wsgihandler:application --master
 fi
 
-# Run using the Web2py web server
-if [ "$1" = 'web2py' ]; then
+# Run using the builtin Rocket web server
+if [ "$1" = 'rocket' ]; then
   # switch to a particular Web2py version if specificed
   selectVersion
   # Use the -a switch to specify the password
-  exec python web2py.py -a '$WEB2PY_PASSWORD' -i 0.0.0.0 -p 9090
+  exec python web2py.py -a '$WEB2PY_PASSWORD' -i 0.0.0.0 -p 8080
 fi
 
 exec "$@"

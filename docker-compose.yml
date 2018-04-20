@@ -4,7 +4,6 @@ services:
   app:
     build: .
     image: smithmicro/web2py
-    mem_limit: 700m
     command: uwsgi
     environment:
       - WEB2PY_PASSWORD=password
@@ -19,4 +18,3 @@ services:
     ports:
       - 8080:80
       - 8443:443
-    mem_limit: 200m
