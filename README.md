@@ -24,7 +24,7 @@ Then open a web browser to:  http://localhost:8080
 
 Example:
 ```
-docker run -it -p 8080:8080 smithmicro/web2py web2py
+docker run -it -p 8080:8080 smithmicro/web2py rocket
 ```
 
 ## Docker Environment Variables
