@@ -16,11 +16,11 @@ Then open a web browser to:  http://localhost:8080
 
 ## Command Line Options
 
-|command|operation|
-|-------|---------|
-|http   |Listen on port 8080 using `http://` using uWSGI in HTTP mode  (default) |
-|uwsgi  |Listen on port 9090 using `uwsgi://` which is useful for connecting to a reverse proxy like nginx|
-|rocket |Listen on port 8080 using `http:// ` with the built in Web2py Rocket web server|
+|command|port|protocol|notes|
+|-------|----|--------|-----|
+|http   |8080|`http://` |Using uWSGI in HTTP mode (default)|
+|uwsgi  |9090|`uwsgi://`|Useful for connecting to a reverse proxy like nginx|
+|rocket |8080|`http://` |Uses the built in Web2py Rocket web server|
 
 Example:
 ```
@@ -31,7 +31,7 @@ docker run -it -p 8080:8080 smithmicro/web2py rocket
 
 |command|operation|default|
 |-------|---------|-------|
-|WEB2PY_VERSION |Use a specific version of web2pi | empty (current version) |
+|WEB2PY_VERSION |Use a specific version of Web2py | empty (current version) |
 |WEB2PY_PASSWORD|Set the adminitrative password | empty |
 
 ## nginx example
@@ -52,19 +52,35 @@ Steps:
 * Press the `Administrative Interface` button
 * Enter `password` as the password to see the admin site.
 
+# Docker Volume Example
+You can expose an application from the host into the container using a volume map.  This Docker Compose example maps an applicaiton folder called `myapp` and sets the default route:
+
+```
+version: '2'
+
+services:
+  app:
+    image: smithmicro/web2py:alpine
+    volumes:
+      - ./myapp:/opt/web2py/applications/myapp
+      - ./routes.py:/opt/web2py/routes.py
+    ports:
+      - 8080:8080
+```
+routes.py would look like this:
+```
+# -*- coding: utf-8 -*-
+
+default_application = 'myapp'
+```
+
 ## Useful Links
-Web2py
+[Web2py Web Site](http://www.web2py.com/)
 
-http://www.web2py.com/
+[Install uWSGI on CentOS](http://uwsgi-docs.readthedocs.io/en/latest/Install.html)
 
-Install uWSGI on Centos
+[Split uWSGI and nginx into 2 microservices](https://medium.com/@greut/minimal-python-deployment-on-docker-with-uwsgi-bc5aa89b3d35)
 
-http://uwsgi-docs.readthedocs.io/en/latest/Install.html
+[Configuring uWSGI](http://uwsgi-docs.readthedocs.io/en/latest/Configuration.html)
 
-How to split uWSGI and nginx into 2 microservices
 
-https://medium.com/@greut/minimal-python-deployment-on-docker-with-uwsgi-bc5aa89b3d35
-
-Configuring uWSGI
-
-http://uwsgi-docs.readthedocs.io/en/latest/Configuration.html
