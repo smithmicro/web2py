@@ -1,5 +1,5 @@
 # Web2py Docker Image
-This image combines web2py and uWSGI into one flexible image.  It supports 3 modes: HTTP via web2py, HTTP via uWSGI or the uwsgi protocol.
+This image combines Web2py and uWSGI into one flexible image.  It supports 3 modes: HTTP via Web2py, HTTP via uWSGI or the uwsgi protocol.
 
 ## Getting started
 To run a simple example using HTTP:
@@ -11,8 +11,8 @@ Then open a web browser to:  http://localhost:8080
 ## Features
 * Supports the HTTP protocol to support standalone testing.
 * Supports uWSGI to be used in conjuntion with a web server such as nginx.
-* Image offloads concerns for HTTPS to another container, such as nginx.  This simplifies the web2py container and makes it general purpose.
-* Applications can be added by a volume share to /opt/web2py/applications/appname
+* Image offloads concerns for HTTPS to another container, such as nginx.  This simplifies the Web2py container and makes it general purpose.
+* Applications can be added by a volume map to /opt/web2py/applications/appname
 
 ## Command Line Options
 
@@ -52,8 +52,8 @@ Steps:
 * Press the `Administrative Interface` button
 * Enter `password` as the password to see the admin site.
 
-# Docker Volume Example
-You can expose an application from the host into the container using a volume map.  This Docker Compose example maps an applicaiton folder called `myapp` and sets the default route:
+# Appliance Example
+You can expose an appliance from the host into the container using a volume map.  This Docker Compose example maps an applicaiton folder called `myapp` and sets the default route:
 
 ```
 version: '2'
