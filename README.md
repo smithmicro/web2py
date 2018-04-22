@@ -52,7 +52,7 @@ Steps:
 * Press the `Administrative Interface` button
 * Enter `password` as the password to see the admin site.
 
-# Appliance Example
+## Appliance Example
 You can expose an appliance from the host into the container using a volume map.  This Docker Compose example maps an applicaiton folder called `myapp` and sets the default route:
 
 ```
@@ -72,6 +72,19 @@ routes.py would look like this:
 # -*- coding: utf-8 -*-
 
 default_application = 'myapp'
+```
+
+## Customizing the Image
+To add Python packages required by your application, create a `Dockerfile` like this.  Make sure you switch to the `root` user, and then back to the `web2py` user after installing Python packages.
+
+```
+FROM smithmicro/web2py
+
+USER root
+
+RUN pip install fileutils Pillow requests
+
+USER web2py
 ```
 
 ## Useful Links

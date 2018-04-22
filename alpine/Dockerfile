@@ -11,9 +11,8 @@ RUN apk update && apk add \
     build-base \
     git \
     linux-headers \
- && pip install \
-    requests \
-    uwsgi \
+ && pip install --upgrade pip \
+ && pip install uwsgi \
  && git clone --recursive https://github.com/web2py/web2py.git /opt/web2py \
  && mv /opt/web2py/handlers/wsgihandler.py /opt/web2py \
  && addgroup -g 1000 -S web2py \

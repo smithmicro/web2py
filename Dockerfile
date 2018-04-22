@@ -15,9 +15,8 @@ RUN yum -y update && yum -y install \
   	python-devel \
   	python-pip \
   	tkinter \
- && pip install \
-    requests \
-    uwsgi \
+ && pip install --upgrade pip \
+ && pip install uwsgi \
  && git clone --recursive https://github.com/web2py/web2py.git /opt/web2py \
  && mv /opt/web2py/handlers/wsgihandler.py /opt/web2py \
  && groupadd -g 1000 web2py \
