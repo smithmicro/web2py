@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  app:
+  web2py:
     build: .
     image: smithmicro/web2py:alpine
     ports:

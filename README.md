@@ -49,8 +49,10 @@ docker-compose up
 Steps:
 * Visit: https://localhost:8443
 * You will need to accept the browser warning of an unsafe site.
-* Press the `Administrative Interface` button
+* Press the `admin` button
 * Enter `password` as the password to see the admin site.
+
+![Docker Compose](docker-compose.png)
 
 ## Appliance Example
 You can expose an appliance from the host into the container using a volume map.  This Docker Compose example maps an applicaiton folder called `myapp` and sets the default route:
@@ -95,5 +97,3 @@ USER web2py
 [Split uWSGI and nginx into 2 microservices](https://medium.com/@greut/minimal-python-deployment-on-docker-with-uwsgi-bc5aa89b3d35)
 
 [Configuring uWSGI](http://uwsgi-docs.readthedocs.io/en/latest/Configuration.html)
-
-
