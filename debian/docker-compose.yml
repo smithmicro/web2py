@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  web2py:
+    build: .
+    image: smithmicro/web2py:debian
+    ports:
+      - 8080:8080
