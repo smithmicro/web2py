@@ -6,3 +6,7 @@ services:
     image: smithmicro/web2py:debian
     ports:
       - 8080:8080
+    environment:
+      - WEB2PY_PASSWORD=password
+      - WEB2PY_ADMIN_IP=172.23.0.1
+  

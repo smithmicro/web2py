@@ -4,6 +4,7 @@ LABEL AUTHOR "Dave Sperling <dsperling@smithmicro.com>"
 # overridable environment variables
 ENV WEB2PY_VERSION=
 ENV WEB2PY_PASSWORD=
+ENV WEB2PY_ADMIN_IP=
 
 WORKDIR /opt/web2py
 
