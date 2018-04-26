@@ -7,17 +7,19 @@ ENV WEB2PY_ROOT=/opt/web2py
 ENV WEB2PY_VERSION=
 ENV WEB2PY_PASSWORD=
 ENV WEB2PY_ADMIN_SECURITY_BYPASS=
+ENV UWSGI_OPTIONS=
 
 WORKDIR $WEB2PY_ROOT
 
 RUN yum -y update && yum -y install \
-  	epel-release \
+    epel-release \
  && yum -y install \
-  	gcc \
+    gcc \
     git \
-  	python-devel \
-  	python-pip \
-  	tkinter \
+    pcre-devel \
+    python-devel \
+    python-pip \
+    tkinter \
  && pip install --upgrade pip \
  && pip install uwsgi \
  && git clone --recursive https://github.com/web2py/web2py.git $WEB2PY_ROOT \

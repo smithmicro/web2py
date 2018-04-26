@@ -7,6 +7,7 @@ ENV WEB2PY_ROOT=/opt/web2py
 ENV WEB2PY_VERSION=
 ENV WEB2PY_PASSWORD=
 ENV WEB2PY_ADMIN_SECURITY_BYPASS=
+ENV UWSGI_OPTIONS=
 
 WORKDIR $WEB2PY_ROOT
 
@@ -14,6 +15,7 @@ RUN apk update && apk add \
     build-base \
     git \
     linux-headers \
+    pcre-dev \
  && pip install --upgrade pip \
  && pip install uwsgi \
  && git clone --recursive https://github.com/web2py/web2py.git $WEB2PY_ROOT \

@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# users can overwrite UWSGI_OPTIONS
+if [ "$UWSGI_OPTIONS" == '' ]; then
+  UWSGI_OPTIONS='--master --thunder-lock --enable-threads'
+fi
+
 selectVersion() {
   if [ "$WEB2PY_VERSION" != '' ]; then
     git checkout $WEB2PY_VERSION
@@ -15,7 +20,7 @@ if [ "$1" = 'uwsgi' ]; then
     python -c "from gluon.main import save_password; save_password('$WEB2PY_PASSWORD',443)"
   fi
   # run uwsgi
-  exec uwsgi --socket 0.0.0.0:9090 --protocol uwsgi --chdir $WEB2PY_ROOT --wsgi wsgihandler:application --master
+  exec uwsgi --socket 0.0.0.0:9090 --protocol uwsgi --wsgi wsgihandler:application $UWSGI_OPTIONS
 fi
 
 # Run uWSGI using http
@@ -24,7 +29,7 @@ if [ "$1" = 'http' ]; then
   selectVersion
   # disable administrator HTTP protection if requested
   if [ "$WEB2PY_ADMIN_SECURITY_BYPASS" = 'true' ]; then
-    if ["$WEB2PY_PASSWORD" = '']; then
+    if [ "$WEB2PY_PASSWORD" == '' ]; then
       echo "ERROR - WEB2PY_PASSWORD not specified"
       exit 1
     fi
@@ -36,7 +41,7 @@ if [ "$1" = 'http' ]; then
       $WEB2PY_ROOT/gluon/main.py
   fi
   # run uwsgi
-  exec uwsgi --http 0.0.0.0:8080 --chdir $WEB2PY_ROOT --wsgi wsgihandler:application --master
+  exec uwsgi --http 0.0.0.0:8080 --wsgi wsgihandler:application $UWSGI_OPTIONS
 fi
 
 # Run using the builtin Rocket web server

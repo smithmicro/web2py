@@ -34,6 +34,7 @@ docker run -it -p 8080:8080 smithmicro/web2py rocket
 |WEB2PY_VERSION |Use a specific version of Web2py | empty (current version) |
 |WEB2PY_PASSWORD|Set the adminitrative password | empty |
 |WEB2PY_ADMIN_SECURITY_BYPASS|Bypasses HTTP secuirty check for the Admin application.  WEB2PY_PASSWORD must also be set. | empty (false) |
+|UWSGI_OPTIONS|Set command line options for uwsgi.  Used for `http` and `uwsgi` commands.|--master --thunder-lock --enable-threads|
 
 ## nginx example
 To use the adminstration functions of web2py, you will need an SSL connection.

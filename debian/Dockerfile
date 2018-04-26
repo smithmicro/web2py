@@ -7,12 +7,14 @@ ENV WEB2PY_ROOT=/opt/web2py
 ENV WEB2PY_VERSION=
 ENV WEB2PY_PASSWORD=
 ENV WEB2PY_ADMIN_SECURITY_BYPASS=
+ENV UWSGI_OPTIONS=
 
 WORKDIR $WEB2PY_ROOT
 
 RUN apt-get update && apt-get -y install \
     gcc \
     git \
+    libpcre3-dev \
  && pip install uwsgi \
  && git clone --recursive https://github.com/web2py/web2py.git $WEB2PY_ROOT \
  && mv $WEB2PY_ROOT/handlers/wsgihandler.py $WEB2PY_ROOT \
