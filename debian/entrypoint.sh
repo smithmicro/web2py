@@ -15,7 +15,7 @@ if [ "$1" = 'uwsgi' ]; then
     python -c "from gluon.main import save_password; save_password('$WEB2PY_PASSWORD',443)"
   fi
   # run uwsgi
-  exec uwsgi --socket 0.0.0.0:9090 --protocol uwsgi --chdir /opt/web2py --wsgi wsgihandler:application --master
+  exec uwsgi --socket 0.0.0.0:9090 --protocol uwsgi --chdir $WEB2PY_ROOT --wsgi wsgihandler:application --master
 fi
 
 # Run uWSGI using http
@@ -23,15 +23,20 @@ if [ "$1" = 'http' ]; then
   # switch to a particular Web2py version if specificed
   selectVersion
   # disable administrator HTTP protection if requested
-  if [ "$WEB2PY_ADMIN_IP" != '' ]; then
+  if [ "$WEB2PY_ADMIN_SECURITY_BYPASS" = 'true' ]; then
+    if ["$WEB2PY_PASSWORD" = '']; then
+      echo "ERROR - WEB2PY_PASSWORD not specified"
+      exit 1
+    fi
+    echo "WARNING! - Admin Application Security over HTTP bypassed"
     python -c "from gluon.main import save_password; save_password('$WEB2PY_PASSWORD',8080)"
-    sed -i "s/elif not request.is_local and not DEMO_MODE:/elif not request.is_local and not DEMO_MODE and not request.env.remote_addr == os.environ.get('WEB2PY_ADMIN_IP'):/" \
-      /opt/web2py/applications/admin/models/access.py
-    sed -i "s/local_hosts = set(\[/local_hosts = set(\[os.environ.get('WEB2PY_ADMIN_IP'), /" \
-      /opt/web2py/gluon/main.py
+    sed -i "s/elif not request.is_local and not DEMO_MODE:/elif False:/" \
+      $WEB2PY_ROOT/applications/admin/models/access.py
+    sed -i "s/is_local=(env.remote_addr in local_hosts and client == env.remote_addr)/is_local=True/" \
+      $WEB2PY_ROOT/gluon/main.py
   fi
   # run uwsgi
-  exec uwsgi --http 0.0.0.0:8080 --chdir /opt/web2py --wsgi wsgihandler:application --master
+  exec uwsgi --http 0.0.0.0:8080 --chdir $WEB2PY_ROOT --wsgi wsgihandler:application --master
 fi
 
 # Run using the builtin Rocket web server

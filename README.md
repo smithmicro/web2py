@@ -33,6 +33,7 @@ docker run -it -p 8080:8080 smithmicro/web2py rocket
 |-------|---------|-------|
 |WEB2PY_VERSION |Use a specific version of Web2py | empty (current version) |
 |WEB2PY_PASSWORD|Set the adminitrative password | empty |
+|WEB2PY_ADMIN_SECURITY_BYPASS|Bypasses HTTP secuirty check for the Admin application.  WEB2PY_PASSWORD must also be set. | empty (false) |
 
 ## nginx example
 To use the adminstration functions of web2py, you will need an SSL connection.
@@ -54,8 +55,8 @@ Steps:
 
 ![Docker Compose](docker-compose.png)
 
-## Appliance Example
-You can expose an appliance from the host into the container using a volume map.  This Docker Compose example maps an applicaiton folder called `myapp` and sets the default route:
+## Application Example
+You can expose an application from the host into the container using a volume map.  This Docker Compose example maps an applicaiton folder called `myapp` and sets the default route:
 
 ```
 version: '2'
@@ -75,6 +76,17 @@ routes.py would look like this:
 
 default_application = 'myapp'
 ```
+
+## Administration Example
+By default, W2b2py requires the user to use HTTPS or connect from 127.0.0.1 in order to use the admin application.  The tests for 127.0.0.1 do not work inside a container as the connecting browser comes from 172.x.x.x via the Docker Bridge Network.
+
+To workaround this, you can use the `WEB2PY_ADMIN_SECURITY_BYPASS` environment variable and set it to `true`.  You also need to set the `WEB2PY_PASSWORD` variable.  To see this in action, run the example in the debian folder:
+```
+cd debian
+docker-compose up
+```
+* Visit: http://localhost:8080/admin
+* Enter `password` as the password to view the admin site.
 
 ## Customizing the Image
 To add Python packages required by your application, create a `Dockerfile` like this.  Make sure you switch to the `root` user, and then back to the `web2py` user after installing Python packages.
