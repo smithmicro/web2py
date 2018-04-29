@@ -31,7 +31,7 @@ docker run -it -p 8080:8080 smithmicro/web2py rocket
 
 |command|operation|default|
 |-------|---------|-------|
-|WEB2PY_VERSION |Use a specific version of Web2py | empty (current version) |
+|WEB2PY_VERSION |Use a specific version of Web2py | empty (current version).  Not supported in Alipine image. |
 |WEB2PY_PASSWORD|Set the adminitrative password | empty |
 |WEB2PY_ADMIN_SECURITY_BYPASS|Bypasses HTTP secuirty check for the Admin application.  WEB2PY_PASSWORD must also be set. | empty (false) |
 |UWSGI_OPTIONS|Set command line options for uwsgi.  Used for `http` and `uwsgi` commands.|--master --thunder-lock --enable-threads|
@@ -90,14 +90,20 @@ docker-compose up
 * Enter `password` as the password to view the admin site.
 
 ## Customizing the Image
-To add Python packages required by your application, create a `Dockerfile` like this.  Make sure you switch to the `root` user, and then back to the `web2py` user after installing Python packages.
+To add Python packages required by your application, create a `Dockerfile` like this.  Make sure you switch to the `root` user, and then back to the `web2py` user after installing your application and any required Python packages.
 
 ```
 FROM smithmicro/web2py
 
 USER root
 
-RUN pip install fileutils Pillow requests
+# Copy my applications to the image
+COPY applications $WEB2PY_ROOT/applications/
+
+# Install required Python pacakages, remove sample apps and set proper ownership
+RUN pip install fileutils pillow requests \
+ && rm -rf $WEB2PY_ROOT/applications/welcome $WEB2PY_ROOT/applications/examples \
+ && chown -R web2py:web2py $WEB2PY_ROOT
 
 USER web2py
 ```

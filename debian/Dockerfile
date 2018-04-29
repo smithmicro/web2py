@@ -22,9 +22,9 @@ RUN apt-get update && apt-get -y install \
  && useradd -r -u 1000 -g web2py web2py \
  && chown -R web2py:web2py $WEB2PY_ROOT
 
-COPY entrypoint.sh /opt
+COPY entrypoint.sh /usr/local/bin/
 
-ENTRYPOINT [ "/opt/entrypoint.sh" ]
+ENTRYPOINT [ "entrypoint.sh" ]
 CMD [ "http" ]
 USER web2py
 
